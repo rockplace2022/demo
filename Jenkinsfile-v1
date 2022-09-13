@@ -1,6 +1,4 @@
 // Jenkinsfile
-// sh "buildah login --username=admin --password=${PASSWORD} --tls-verify=false --storage-driver vfs --root $HOME/.local/share/containers/vfs-storage/ registry.ocp4.local "
-// sh "buildah bud --format=docker --tls-verify=false --storage-driver=vfs --root $HOME/.local/share/containers/vfs-storage/ -t registry.ocp4.local/sample/demo-v1:${APP_TAG} /tmp/workspace/demo-cicd/ "
   
 node('maven') {
  stage('Source Build') {
@@ -14,7 +12,7 @@ node('maven') {
  }
   
 stage('Build Image') {
- sh "buildah bud --format=docker -t --tls-verify=false --storage-driver=vfs --root $HOME/.local/share/containers/vfs-storage/ -t registry.ocp4.local/sample/demo-v1:${APP_TAG} /tmp/workspace/demo-cicd/ "
+ sh "buildah bud --format=docker --tls-verify=false --storage-driver=vfs --root $HOME/.local/share/containers/vfs-storage/ -t registry.ocp4.local/sample/demo-v1:${APP_TAG} /tmp/workspace/demo-cicd/ "
  }
   
 stage('Registry Image Push') {
