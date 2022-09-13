@@ -4,8 +4,8 @@ USER root
 
 COPY target/demo.war /deployments/demo.war
 
-RUN chmod 755 /deployments/demo.war    
-RUN chown 185.root /deployments/demo.war    
+#RUN chmod 755 /deployments/demo.war    
+#UN chown 185.root /deployments/demo.war    
 
 USER jboss
 
