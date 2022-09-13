@@ -8,7 +8,7 @@ node('maven') {
  sh "oc whoami"
  sh "id"
   
- git url: "https://github.com/rockplace2022/demo.git "
+ git branch: "main" , url: "https://github.com/rockplace2022/demo.git "
   
  sh "mvn clean package"
  }
