@@ -1,4 +1,4 @@
-FROM registry.ocp4.local/jboss-webserver-5/jws56-openjdk8-openshift-rhel8:5.6.2-10
+FROM registry.ocp4.local/jboss-eap-7/eap74-openjdk8-openshift-rhel7:7.4.6-7
 
 USER root
 
