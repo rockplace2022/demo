@@ -1,13 +1,13 @@
 // Jenkinsfile
   
 node('maven') {
- stage('Source Build') {
-  
- sh "oc whoami"
- sh "id"
+
+ stage('git clone') {
   
  git branch: "main" , url: "https://github.com/rockplace2022/demo.git "
-  
+ } 
+
+ stage('Source Build') {
  sh "mvn clean package"
  }
   
