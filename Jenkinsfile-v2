@@ -12,7 +12,7 @@ node('maven') {
  }
   
 stage('Build Image') {
- sh "buildah bud --format=docker --tls-verify=false --storage-driver=vfs --root $HOME/.local/share/containers/vfs-storage/ -t registry.ocp4.local/sample/demo-v1:${APP_TAG} /tmp/workspace/wsjeong-repo/wsjeong-repo-jenskins-demo-v1/ "
+ sh "buildah bud --format=docker --tls-verify=false --storage-driver=vfs --root $HOME/.local/share/containers/vfs-storage/ -t registry.ocp4.local/sample/demo-v1:${APP_TAG} /tmp/workspace/demo-cicd/ "
  }
   
 stage('Registry Image Push') {
