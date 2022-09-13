@@ -1,0 +1,33 @@
+// Jenkinsfile
+// sh "buildah login --username=admin --password=${PASSWORD} --tls-verify=false --storage-driver vfs --root $HOME/.local/share/containers/vfs-storage/ registry.ocp4.local "
+// sh "buildah bud --format=docker --tls-verify=false --storage-driver=vfs --root $HOME/.local/share/containers/vfs-storage/ -t registry.ocp4.local/sample/demo-v1:${APP_TAG} /tmp/workspace/demo-v1/ "
+  
+node('maven') {
+ stage('Source Build') {
+  
+ sh "oc whoami"
+ sh "id"
+  
+ git url: "https://github.com/rockplace2022/demo.git "
+  
+ sh "mvn clean package"
+ }
+  
+stage('Build Image') {
+ sh "docker build -t --tls-verify=false --storage-driver=vfs --root $HOME/.local/share/containers/vfs-storage/ -t registry.ocp4.local/sample/demo-v1:${APP_TAG} /tmp/workspace/demo-v1/ "
+ }
+  
+stage('Registry Image Push') {
+ sh "docker push --tls-verify=false --storage-driver=vfs --root $HOME/.local/share/containers/vfs-storage/ registry.ocp4.local/sample/demo-v1:${APP_TAG}"
+ }
+  
+stage('Image Import') {
+ sh "oc login -u admin -p ${PASSWORD} --server=https://api.ocp4.local:6443 --certificate-authority=ingress-ca.crt --insecure-skip-tls-verify=true "
+ sh "oc import-image demo-v1:${APP_TAG} --from=registry.ocp4.local/sample/demo-v1:${APP_TAG} --insecure --confirm -n sample "
+ }
+  
+stage('Deploy') {
+ sh "oc tag demo-v1:${APP_TAG} demo-v1:latest -n sample"
+ }
+  
+}
