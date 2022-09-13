@@ -14,11 +14,11 @@ node('maven') {
  }
   
 stage('Build Image') {
- sh "docker build -t --tls-verify=false --storage-driver=vfs --root $HOME/.local/share/containers/vfs-storage/ -t registry.ocp4.local/sample/demo-v1:${APP_TAG} /tmp/workspace/demo-v1/ "
+ sh "buildah bud --format=docker -t --tls-verify=false --storage-driver=vfs --root $HOME/.local/share/containers/vfs-storage/ -t registry.ocp4.local/sample/demo-v1:${APP_TAG} /tmp/workspace/demo-v1/ "
  }
   
 stage('Registry Image Push') {
- sh "docker push --tls-verify=false --storage-driver=vfs --root $HOME/.local/share/containers/vfs-storage/ registry.ocp4.local/sample/demo-v1:${APP_TAG}"
+ sh "buildah push --tls-verify=false --storage-driver=vfs --root $HOME/.local/share/containers/vfs-storage/ registry.ocp4.local/sample/demo-v1:${APP_TAG}"
  }
   
 stage('Image Import') {
