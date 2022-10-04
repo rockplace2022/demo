@@ -1,6 +1,6 @@
 // Jenkinsfile
   
-node {
+node('maven') {
 
  stage('git clone') {
   
